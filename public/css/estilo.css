@@ -1,0 +1,32 @@
+ 
+ 
+    
+ 
+.margenes{
+    margin-top: 3%;
+}
+.margentotal{
+    margin: 3%;
+}
+.borde{
+    border:2px  green solid;
+}  
+#lateral{
+    
+    width: max-content;
+    margin: 10%;
+     
+    
+    
+} 
+#lateral img{
+    width: 125px;
+    height: 125px;
+    
+    
+}
+ 
+#lateral nav ul{
+    display: block;
+}
+ 
