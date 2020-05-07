@@ -5,7 +5,7 @@
         <div class="container margenes">
             <div class="row">
                 <div class="col-lg-8">
-                    <img  src="{{ asset('imagenes/logobici.png') }}"  alt="logoMola" class="img-fluid borde rounded"  /> 
+                    <img  src="{{ asset('images/logobici.png') }}"  alt="logoMola" class="img-fluid borde rounded"  /> 
                 </div>
                 <div class="col-lg-4 margenes" >
                     <form class="form-inline">

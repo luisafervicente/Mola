@@ -2,7 +2,7 @@
         <nav class="navbar navbar-expand-sm bg-light justify-content-center  ">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link" href="#"><img src="{{asset('imagenes/redes.png')}}"> </a>
+                    <a class="nav-link" href="#"><img src="{{asset('images/redes.png')}}"> </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#"><button type="button" class="btn btn-success">Condiciones de uso</button></a>
