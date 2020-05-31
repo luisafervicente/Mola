@@ -1,0 +1,10 @@
+         @extends('layouts.plantilla')
+       @section('cabecera')
+       @include('layouts.cabeceraGeneral')
+       @stop
+       @section('cuerpo')
+       @include('layouts.formulario')
+          @stop
+       @section('pie')
+       @include('layouts.pieGeneral')
+       @stop
