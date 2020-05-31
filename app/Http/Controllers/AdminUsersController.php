@@ -33,18 +33,8 @@ class AdminUsersController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request) {
-        $rol=$request->role_id;
-       User::create($request->all());
-        $users=User::all();
-        
-        if($rol==='8'){
-            return redirect('/admin/users/administrador');
-            
-        }
-        else{
-            return redirect('/admin/users');
-        }
-        
+        User::create($request->all());
+        return redirect('/admin/users');
     }
 
     /**

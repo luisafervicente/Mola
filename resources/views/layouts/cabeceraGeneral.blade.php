@@ -23,7 +23,7 @@
                             </div>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{asset('admin/users/create')}}">Registrarse</a>
+                            <a class="nav-link" href="../registrar.blade.php">Registrarse</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#">Identificarse</a>
