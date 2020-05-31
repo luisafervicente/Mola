@@ -2,19 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use App\Administrador;
 use Illuminate\Http\Request;
-use App\User;
 
-class AdminUsersController extends Controller {
-
+class AdministradorController extends Controller
+{
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index() {
-        $users = User::all();
-        return view('admin.users.index', compact('users'));
+    public function index()
+    {
+        //
     }
 
     /**
@@ -22,8 +22,9 @@ class AdminUsersController extends Controller {
      *
      * @return \Illuminate\Http\Response
      */
-    public function create() {
-        return view('admin.users.create');
+    public function create()
+    {
+        //
     }
 
     /**
@@ -32,38 +33,30 @@ class AdminUsersController extends Controller {
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request) {
-        $rol=$request->role_id;
-       User::create($request->all());
-        $users=User::all();
-        
-        if($rol==='8'){
-            return redirect('/admin/users/administrador');
-            
-        }
-        else{
-            return redirect('/admin/users');
-        }
-        
+    public function store(Request $request)
+    {
+        //
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Administrador  $administrador
      * @return \Illuminate\Http\Response
      */
-    public function show($id) {
+    public function show(Administrador $administrador)
+    {
         //
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Administrador  $administrador
      * @return \Illuminate\Http\Response
      */
-    public function edit($id) {
+    public function edit(Administrador $administrador)
+    {
         //
     }
 
@@ -71,21 +64,22 @@ class AdminUsersController extends Controller {
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\Administrador  $administrador
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id) {
+    public function update(Request $request, Administrador $administrador)
+    {
         //
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\Administrador  $administrador
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id) {
+    public function destroy(Administrador $administrador)
+    {
         //
     }
-
 }
