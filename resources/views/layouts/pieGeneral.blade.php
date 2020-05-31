@@ -5,7 +5,7 @@
                     <a class="nav-link" href="#"><img src="{{asset('images/redes.png')}}"> </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#"><button type="button" class="btn btn-success">Condiciones de uso</button></a>
+                    <a class="nav-link" href="{{ route('condiciones_uso') }}"><button type="button" class="btn btn-success">Condiciones de uso</button></a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#"><button type="button" class="btn btn-success">Aviso Pivacidad</button></a>

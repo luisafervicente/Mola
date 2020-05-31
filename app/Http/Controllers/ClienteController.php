@@ -1,20 +1,25 @@
 <?php
 
 namespace App\Http\Controllers;
-
-use App\Cliente;
+use Illuminate\Validation\Rule;
 use Illuminate\Http\Request;
+use App\Cliente;
+use App\User;
+ 
 
-class ClienteController extends Controller
-{
+class ClienteController extends Controller {
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        //
+    public function index() {
+        $users = User::get();
+        $clientes = Cliente::orderBy('id', 'Desc')->paginate(10);
+       
+    
+        return view('users.cliente.index', compact('clientes', 'users'));
     }
 
     /**
@@ -22,9 +27,11 @@ class ClienteController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
-        //
+    public function create() {
+
+        $cliente = Cliente::get();
+        
+          return view('users.cliente.create', compact('cliente'));
     }
 
     /**
@@ -33,53 +40,92 @@ class ClienteController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
-        //
+    public function store(Request $request, User $user) {
+
+        $cliente = Cliente::create($request->all());
+    
+        
+        
+
+        return redirect()->route('home')->with('session', 'Cliente dado de alta correctamente');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Cliente  $cliente
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Cliente $cliente)
-    {
-        //
+    public function show(Cliente $cliente) { {
+
+
+            $users = User::get();
+
+            return view('users.cliente.view', compact('cliente', 'users'));
+        }
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Cliente  $cliente
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Cliente $cliente)
-    {
-        //
+    public function edit(Cliente $cliente ) {
+        $user=User::get();
+        return view('users.cliente.edit', compact('cliente','user'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Cliente  $cliente
+     * @param  Cliente @cliente
+     * @param  User @user
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Cliente $cliente)
-    {
-        //
+    public function update(Request $request, Cliente $cliente) {
+       $users=User::get();
+       $usuario=new User;
+        foreach($users as $user){
+            if ($user->id==$cliente->user_id){
+                 
+                 
+                
+             
+       $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255',Rule::unique('users')->ignore($user)],
+             
+            'apellidos' => ['required', 'string', 'max:255'],
+            'DNI' => ['required', 'string', 'max:9',Rule::unique('users')->ignore($user)],
+            'telefono' => ['required', 'string', 'max:11'],
+            
+        ]);
+         
+                $user->update($request->all());
+                $user->save();
+                
+            }
+        }
+
+        
+
+         
+      
+     
+        return redirect()->route('cliente.index')->with('sesion', 'Cliente actualizado correctamente');
+                       
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Cliente  $cliente
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Cliente $cliente)
-    {
-        //
+    public function destroy($id) {
+        return 'delete';
     }
+
 }

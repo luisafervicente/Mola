@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Administrador;
 use Illuminate\Http\Request;
+use App\User;
+use App\Administrador;
 
 class AdministradorController extends Controller
 {
@@ -14,8 +15,14 @@ class AdministradorController extends Controller
      */
     public function index()
     {
-        //
+        $users=User::get();
+        $administradores=Administrador::orderBy('id','Desc')->paginate(10);
+         
+        
+        return view('users.administrador.index', compact('administradores','users'));
     }
+ 
+     
 
     /**
      * Show the form for creating a new resource.
@@ -41,10 +48,10 @@ class AdministradorController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Administrador  $administrador
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Administrador $administrador)
+    public function show($id)
     {
         //
     }
@@ -52,33 +59,59 @@ class AdministradorController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Administrador  $administrador
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Administrador $administrador)
+    public function edit( )
     {
-        //
+         return 'pagina editar';
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Administrador  $administrador
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Administrador $administrador)
     {
-        //
+          $users=User::get();
+       $usuario=new User;
+        foreach($users as $user){
+            if ($user->id==$administrador->users_id){ $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255',Rule::unique('users')->ignore($user)],
+             
+            'apellidos' => ['required', 'string', 'max:255'],
+            'DNI' => ['required', 'string', 'max:9',Rule::unique('users')->ignore($user)],
+            'telefono' => ['required', 'string', 'max:11'],
+            
+        ]);
+         
+                $user->update($request->all());
+                $user->save();
+                
+            }
+        }
+
+        
+
+         
+      
+     
+        return redirect()->route('administrador.index')->with('sesion', 'Admninistrador actualizado correctamente');
+            
+                 
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Administrador  $administrador
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Administrador $administrador)
+    public function destroy($id)
     {
         //
     }

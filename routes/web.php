@@ -1,7 +1,13 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use App\User;
+use App\Cliente;
+use App\Vendedor;
+use App\Administrador;
+use App\Tienda;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\VendedorController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -14,14 +20,30 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    $tiendas=Tienda::get();
+    return view('welcome',compact('tiendas'));
 });
+Route::post('/welcome', "HomeController@index") ;
+     
 
 Auth::routes();
-
+ 
 Route::get('/home', 'HomeController@index')->name('home');
-
-Route::resource('admin/users', 'AdminUsersController');
-Route::get("admin/users/administrador}", function( ){
-       return  ("Estás en la noticia número  -" );
-});
+Route::resource('/users','UserController')->names('users');
+Route::resource('/administrador', 'AdministradorController')->names('administrador');
+Route::resource('/cliente', 'ClienteController')->names('cliente');
+Route::resource('/vendedor', 'VendedorController')->names('vendedor');
+Route::resource('/tienda', 'TiendaController')->names('tienda');
+Route::resource('/producto', 'ProductoController')->names('producto');
+Route::get('welcomeAdmin',function(){
+return view('welcome_administrador');})->name('welcomeAdmin');
+Route::post('/elegir/{user}','UserController@seleccionar')->name('elegir');//con esta ruta se elige si crear un vendedor o un cliente
+Route::resource('/direccion','DireccionController')->names('direccion');
+Route::get('/quienes_somos',function(){
+return view('quienes_somos');})->name("quienes_somos");
+Route::get('/condiciones_uso',function(){
+return view('condiciones_uso');})->name('condiciones_uso');
+Route::get('/aviso_privacidad',function(){
+return view('aviso_privacidad');})->name('aviso_privacidad');
+Route::get('/navegar_tiendas', 'TiendaController@cargarTiendas')->name('navegar_tiendas');
+ 

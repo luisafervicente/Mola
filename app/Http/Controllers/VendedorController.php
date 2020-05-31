@@ -1,20 +1,24 @@
 <?php
 
 namespace App\Http\Controllers;
-
-use App\Vendedor;
+use App\Direccion;
 use Illuminate\Http\Request;
+use App\Vendedor;
+use App\User;
 
-class VendedorController extends Controller
-{
+class VendedorController extends Controller {
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        //
+    public function index() {
+        $users=User::get();
+        $vendedores=Vendedor::orderBy('id','Desc')->paginate(10);
+         
+        
+        return view('users.vendedor.index', compact('vendedores','users'));
     }
 
     /**
@@ -22,9 +26,13 @@ class VendedorController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
-        //
+    public function create() {
+        $vendedor = Vendedor::get();
+
+
+
+
+        return view('users.vendedor.create', compact('vendedor'));
     }
 
     /**
@@ -33,53 +41,67 @@ class VendedorController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
-        //
-    }
+    public function store(Request $request) {
+        
+        $users=User::get();  
+        $vendedor=Vendedor::create($request->all());
+        foreach($users as $user){
+            if($user->id==$vendedor->user_id){//buscamos el id del usuario
+               
+           if($request->get('direccion')){
+            $user->direccion()->sync($request->get('direccion'));
+            }}
+        }
+         return redirect()->route('vendedor.index')->with('session_succes','Vendedor guardado satisfactoriamente') ;  
+        }
+        
+        
+        
+        
+        
+        
+     
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Vendedor  $vendedor
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Vendedor $vendedor)
-    {
-        //
+    public function show($id) {
+        return "show";
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Vendedor  $vendedor
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Vendedor $vendedor)
-    {
-        //
+    public function edit($id) {
+       return "edit";
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Vendedor  $vendedor
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Vendedor $vendedor)
-    {
-        //
+    public function update(Request $request, $id) {
+        return "update";
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Vendedor  $vendedor
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Vendedor $vendedor)
-    {
-        //
+    public function destroy(User $user) {
+       $user->delete();
+         return redirect()->route('vendedor.index')->with('session','Rol eliminado satisfactoriamente') ;  
     }
+
 }
