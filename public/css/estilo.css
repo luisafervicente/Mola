@@ -30,3 +30,8 @@
     display: block;
 }
  
+.colorBoton{
+    background: red;
+    border-radius: 25px;
+}
+ 

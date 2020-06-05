@@ -1,4 +1,5 @@
 @extends('layouts.plantilla')
+@if (  (Auth::user()!=null))
 @section('cabecera')
 @include('layouts.barra_administrador')
 @stop
@@ -56,11 +57,42 @@
 
 
 
-                        @endsection
-
 
                     </div></div></div></div>
 
 
+ @endsection
+  @else
+                        
 
+@section('cabecera')
+
+@include('layouts.cabeceraGeneral')
+@stop
+
+@section('lateral')
+@include('layouts.barra_lateral')
+@stop
+
+@section('cuerpo_lateral')
+
+
+<div class="row justify-center·">
+     
+<div class="card col-lg-4 col-md-6 col-sd-10 col-10" style="width: 18rem; margin-top: 5%;">
+    
+    <div style="background:  #218838; color:white;" >{{$tienda->nombre_tienda}}</div> 
+    <div class="card-body">
+         <img src="{{ asset('images/'.$tienda->image) }}" class="card-img-top" > 
+  
+    <p class="card-text">{{$tienda->comentarios}}</p>
+  </div>
+</div>
+    
+</div>
+@endsection
+@section('pie')
+@include('layouts.pieGeneral')
+@stop
+@endif
 

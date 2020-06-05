@@ -18,7 +18,7 @@ class Direccion extends Model
     }
     
     public function tiendas(){
-        return $this->belongsToMany('App\Tienda');
+        return $this->belongsToMany('App\Tienda','tienda_direccions', 'direccion_id', 'tienda_id');
     }
     
 }

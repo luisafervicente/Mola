@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Tienda;
 use App\Cliente;
 use App\Direccion;
 use App\Vendedor;
@@ -17,9 +18,9 @@ class DireccionController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function index() {
-         $direcciones=Direccion::with('users')->get();//de esta manera me devuelve las
-         //direcciones co el usuario
-          
+        $direcciones = Direccion::with('users')->get(); //de esta manera me devuelve las
+        //direcciones co el usuario
+
         return view('direccion.index', compact('direcciones'));
     }
 
@@ -30,9 +31,9 @@ class DireccionController extends Controller {
      */
     public function create() {
 
-        $user=User::get();
-        $direcciones= Direccion::get();
-        return view('direccion.create', compact('direccion'));
+
+        $direcciones = Direccion::with('users', 'tiendas')->get();
+        return view('direccion.create', compact('direcciones'));
     }
 
     /**
@@ -42,21 +43,29 @@ class DireccionController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request) {
-        $direccion = Direccion::create($request->all());
-        $id = $request->user_id;
-
-        $user = User::find($id);
-        $direccion->users()->sync($user);
-        if($user->rol=='vendedor'){
-            return 'hola';
-            return view('users.vendedor.create');
-            
-        }elseif($user->rol=='cliente'){
-            return view('users.cliente.create');
-        }else{
-         
-        return view('home');
-    }
+        $direccion = Direccion::create($request->all()); //creo una direccion co todos los datos
+        
+        if (isset($request->tienda_id)) {
+            $idTienda = $request->tienda_id;
+            $tienda = Tienda::find($idTienda);
+            $direccion->tienda()->sync($tienda);
+            return redirect()->route('tienda.index')->with('session', 'Dirección dada de alta correctamente,ya puedes empezar a gestionar tu tienda');
+        }
+         if (isset($request->user_id)) {
+            $id = $request->user_id;
+            $user = User::find($id);
+            $direccion->users()->sync($user);
+            if ($user->rol == 'vendedor') {
+                return redirect()->route('vendedor.index')->with('session', 'Se ha dado de alta correctamente');
+            } elseif ($user->rol == 'cliente') {
+                return redirect()->route('cliente.index')->with('session','Se ha dado de alta correctamente');
+         }elseif($user->rol=='administrador'){
+             return redirect()->route('administrador.index')->with('session','Se ha dado de alta correctamente');
+             
+         }else{
+             return redirect()->route('login')->with('session','Dirección dada de alta correctamente');
+         }
+        }
     }
 
     /**
@@ -66,7 +75,7 @@ class DireccionController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function show(Direccion $direccion) {
-         return view('direccion.view',compact('direccion'));
+        return view('direccion.view', compact('direccion'));
     }
 
     /**
@@ -76,7 +85,7 @@ class DireccionController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function edit(Direccion $direccion) {
-       return view('direccion.view', compact('direccion'));
+        return view('direccion.view', compact('direccion'));
     }
 
     /**
@@ -87,9 +96,9 @@ class DireccionController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Direccion $direccion) {
-        $direccion->update(request->all());
+        $direccion->update($request->all());
         $direccion->save();
-        return redirect()->route('direccon.index')->with('session','Dirección actualizada correctamente');
+        return redirect()->route('direccon.index')->with('session', 'Dirección actualizada correctamente');
     }
 
     /**
@@ -99,22 +108,19 @@ class DireccionController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function destroy(Direccion $direccion) {
-          $direccion->delete();
-         return redirect()->route('direccion.index')->with('session','Dirección eliminada satisfactoriamente') ;  
+        $direccion->delete();
+        return redirect()->route('direccion.index')->with('session', 'Dirección eliminada satisfactoriamente');
     }
-      /**
+
+    /**
      * Se determina de quien es la dirección, si de un vendedor o de un
-       * cliente, y asi se le dirige para que siga añadiendo datos
+     * cliente, y asi se le dirige para que siga añadiendo datos
      *
      * @param   
      * @param  int id
      * @return \Illuminate\Http\Response
-       * la ruta que debe seguir el métdod
-     */  
-    
-    
-    
-    
+     * la ruta que debe seguir el métdod
+     */
     public function adjudicarDireccion($id) {
         return $id;
         $vendedores = Vendedor::get();

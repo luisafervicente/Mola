@@ -23,7 +23,7 @@ modificando o añadiendo una direccion una vez identificado, se ira a la pagina 
         <h3>Esta dirección esta asociada a los siguientes usuarios: 
         @foreach($direccion->users as $user)
         {{ $user->name }} <br /> </h3>
-       @endif
+       @endforeach
         <h4>Lo primero la dirección </h4>
         {{ Form:: label('calle', 'Calle, nùmero, piso: ') }}
         {{ Form:: text('calle',$direccion->calle, array('readonly') )}} 

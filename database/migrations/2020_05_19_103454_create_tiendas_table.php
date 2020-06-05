@@ -18,6 +18,7 @@ class CreateTiendasTable extends Migration
             $table->string('nombre_tienda')->unique(); 
             $table->enum('clasificacion',['alimentacion','textil','calzado','papeleria','electronica','drogueria','bazar','servicios','otros']);
             $table->string('image');
+            $table->string('comentarios');
             $table->timestamps();
         });
     }

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateDireccionsTable extends Migration
+class CreateRegistrosTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,13 @@ class CreateDireccionsTable extends Migration
      */
     public function up()
     {
-        Schema::create('direccions', function (Blueprint $table) {
+        Schema::create('registros', function (Blueprint $table) {
             $table->id();
-            $table->string('calle');
-            $table->string('poblacion');
-            $table->string('provincia');
-            $table->string('pais');
-            $table->string('codigo_postal');
+            $table->string('n_factura_comprador');
+            $table->string('n_albaran_vendedor');
+            $table->string('n_factura_vendedor')->nullable();
+   
+            $table->foreignId('id_carrito')->references('id')->on('carritos')->onDelete('cascade');
             
             $table->timestamps();
         });
@@ -32,6 +32,6 @@ class CreateDireccionsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('direccions');
+        Schema::dropIfExists('registros');
     }
 }

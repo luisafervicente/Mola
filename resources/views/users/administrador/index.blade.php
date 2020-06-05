@@ -1,5 +1,4 @@
- @extends('layouts.plantilla')
-
+@extends('layouts.plantilla')
 @section('cabecera')
 @include('layouts.barra_administrador')
 @stop  
@@ -22,16 +21,12 @@
                         <th scope="col">DNI</th>
                         <th scope="col">Email</th>
                          
-
-
-
                         <th colspan="3"></th>
                     </tr>
                 </thead>
                 <tbody>
                    @foreach($users as $user)
                       @if($user->rol=='administrador')
-                    
                     
                     <tr>
                         <th scope="row">{{$user->id}}</th>
@@ -42,7 +37,7 @@
                         <td>{{$user->email}}</td>
                         
                         <!--no le doy estilo a estos enlaces, en principio pueden ser botones, pero se deja al gusto de la aplicación en la que se ponga -->
-                        <td><a href="{{route('users.show', $user)}}">Mostrar</a></td>
+                        <td><a href="{{ route('users.show', $user->id ) }}">Mostrar</a></td>
                         <td>  <form method="POST" action="{{ route('users.destroy', $user)}}">
                                 @csrf
                                 @method('DELETE')
@@ -50,7 +45,7 @@
 
 
                             </form><td>
-                        <td><a href="{{route('users.edit',$user->id)}}">Editar</a></td> 
+                        <td><a href="{{route('users.edit',$user )}}">Editar</a></td> 
 
                         @endif
 
@@ -58,7 +53,7 @@
                     @endforeach 
                  
                     <tr>
-                        <td><a href="{{route('users.create')}}">Crear</a></td>
+                        <td><a href="{{route('administrador.create')}}">Crear</a></td>
                     </tr>
                 </tbody>
             </table>

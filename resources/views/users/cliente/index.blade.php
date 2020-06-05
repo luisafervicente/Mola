@@ -1,5 +1,5 @@
 @extends('layouts.plantilla')
-
+@if(Auth::user()->rol=='administrador')
 @section('cabecera')
 @include('layouts.barra_administrador')
 @stop  
@@ -41,10 +41,10 @@
 
                         <!--no le doy estilo a estos enlaces, en principio pueden ser botones, pero se deja al gusto de la aplicación en la que se ponga -->
                         <td><a href="{{route('users.show', $user->id)}}">Mostrar</a></td>
-                        <td>  <form method="POST" action="{{ route('user.destroy', $user)}}">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-danger">Eliminar</button>
+                        <td>  <a href="{{ route('users.destroy', $user)}}">
+                                 
+                                <button type="button" class="btn btn-danger">Eliminar</button></a>
+
 
 
                             </form><td>
@@ -68,3 +68,16 @@
 
 </div>
 @endsection
+@else
+@section('cabecera')      
+@include('layouts.cabeceraGeneral')
+@stop
+@section('cuerpo')
+@include('layouts.imagenHome')
+@stop
+@section('pie')
+@include('pieGeneral')
+ @stop
+ @endif
+
+

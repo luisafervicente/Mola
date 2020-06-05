@@ -4,19 +4,18 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTiendaUserTable extends Migration
-{
+class CreateTiendaUserTable extends Migration {
+
     /**
      * Run the migrations.
      *
      * @return void
      */
-    public function up()
-    {
+    public function up() {
         Schema::create('tienda_user', function (Blueprint $table) {
             $table->id();
-             $table->foreignId('tienda_id')->references('id')->on('tiendas')->onDelete('cascade');
-            $table->foreignId('user_id')->references('id')->on('user')->onDelete('cascade');
+            $table->foreignId('tienda_id')->references('id')->on('tiendas')->onDelete('cascade');
+            $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -26,8 +25,8 @@ class CreateTiendaUserTable extends Migration
      *
      * @return void
      */
-    public function down()
-    {
+    public function down() {
         Schema::dropIfExists('tienda_user');
     }
+
 }

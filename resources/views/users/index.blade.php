@@ -41,7 +41,7 @@
                         <td>{{$user->rol}}</td>
 
                         <!--no le doy estilo a estos enlaces, en principio pueden ser botones, pero se deja al gusto de la aplicación en la que se ponga -->
-                        <td><a href="{{route('users.show', $user }}">Mostrar</a></td>
+                        <td><a href="{{route('users.show', $user )}}">Mostrar</a></td>
                         <td>  <form method="POST" action="{{ route('users.destroy', $user->id)}}">
                                 @csrf
                                 @method('DELETE')

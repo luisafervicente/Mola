@@ -1,11 +1,11 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use Illuminate\Validation\Rule;
 use Illuminate\Http\Request;
 use App\Cliente;
 use App\User;
- 
 
 class ClienteController extends Controller {
 
@@ -14,12 +14,13 @@ class ClienteController extends Controller {
      *
      * @return \Illuminate\Http\Response
      */
-    public function index() {
+    public function index(User $user) {
         $users = User::get();
         $clientes = Cliente::orderBy('id', 'Desc')->paginate(10);
-       
-    
-        return view('users.cliente.index', compact('clientes', 'users'));
+        if($user->rol=='administrador'){
+        return view('users.cliente.index', compact('clientes', 'users'));}
+        else{return redirect()->route('home')->with('session'); 
+    }
     }
 
     /**
@@ -30,8 +31,8 @@ class ClienteController extends Controller {
     public function create() {
 
         $cliente = Cliente::get();
-        
-          return view('users.cliente.create', compact('cliente'));
+
+        return view('users.cliente.create', compact('cliente'));
     }
 
     /**
@@ -42,12 +43,17 @@ class ClienteController extends Controller {
      */
     public function store(Request $request, User $user) {
 
+        $users = User::get();
         $cliente = Cliente::create($request->all());
-    
-        
-        
+        foreach ($users as $user) {
+            if ($user->id == $cliente->user_id) {//buscamos el id del usuario
+                if ($request->get('direccion')) {
+                    $user->direccion()->sync($request->get('direccion'));
+                }
+            }
+        }
 
-        return redirect()->route('home')->with('session', 'Cliente dado de alta correctamente');
+        return redirect()->route('direccion.create')->with('session', 'Cliente guardado satisfactoriamente,ahora añada una dirección por favor');
     }
 
     /**
@@ -71,9 +77,9 @@ class ClienteController extends Controller {
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Cliente $cliente ) {
-        $user=User::get();
-        return view('users.cliente.edit', compact('cliente','user'));
+    public function edit(Cliente $cliente) {
+        $user = User::get();
+        return view('users.cliente.edit', compact('cliente', 'user'));
     }
 
     /**
@@ -85,37 +91,33 @@ class ClienteController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Cliente $cliente) {
-       $users=User::get();
-       $usuario=new User;
-        foreach($users as $user){
-            if ($user->id==$cliente->user_id){
-                 
-                 
-                
-             
-       $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255',Rule::unique('users')->ignore($user)],
-             
-            'apellidos' => ['required', 'string', 'max:255'],
-            'DNI' => ['required', 'string', 'max:9',Rule::unique('users')->ignore($user)],
-            'telefono' => ['required', 'string', 'max:11'],
-            
-        ]);
-         
+        $users = User::get();
+        $usuario = new User;
+        foreach ($users as $user) {
+            if ($user->id == $cliente->user_id) {
+
+
+
+
+                $request->validate([
+                    'name' => ['required', 'string', 'max:255'],
+                    'email' => ['required', 'string', 'email', 'max:255', Rule::unique('users')->ignore($user)],
+                    'apellidos' => ['required', 'string', 'max:255'],
+                    'DNI' => ['required', 'string', 'max:9', Rule::unique('users')->ignore($user)],
+                    'telefono' => ['required', 'string', 'max:11'],
+                ]);
+
                 $user->update($request->all());
                 $user->save();
-                
             }
         }
 
-        
 
-         
-      
-     
+
+
+
+
         return redirect()->route('cliente.index')->with('sesion', 'Cliente actualizado correctamente');
-                       
     }
 
     /**

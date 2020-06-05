@@ -37,7 +37,7 @@ Route::resource('/tienda', 'TiendaController')->names('tienda');
 Route::resource('/producto', 'ProductoController')->names('producto');
 Route::get('welcomeAdmin',function(){
 return view('welcome_administrador');})->name('welcomeAdmin');
-Route::post('/elegir/{user}','UserController@seleccionar')->name('elegir');//con esta ruta se elige si crear un vendedor o un cliente
+Route::post('/elegir/{id}','UserController@seleccionar')->name('elegir');//con esta ruta se elige si crear un vendedor o un cliente
 Route::resource('/direccion','DireccionController')->names('direccion');
 Route::get('/quienes_somos',function(){
 return view('quienes_somos');})->name("quienes_somos");
@@ -45,5 +45,7 @@ Route::get('/condiciones_uso',function(){
 return view('condiciones_uso');})->name('condiciones_uso');
 Route::get('/aviso_privacidad',function(){
 return view('aviso_privacidad');})->name('aviso_privacidad');
+Route::get('/ayuda',function(){
+return view('ayuda');})->name('ayuda');
 Route::get('/navegar_tiendas', 'TiendaController@cargarTiendas')->name('navegar_tiendas');
  

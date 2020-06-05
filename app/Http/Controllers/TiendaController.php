@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 use App\Tienda;
 use App\User;
+use App\Tienda_User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use App\Tienda_Direccion;
 class TiendaController extends Controller
 {
     /**
@@ -14,10 +16,8 @@ class TiendaController extends Controller
      */
     public function index()
     {
-         $tiendas=Tienda::get();//de esta manera me devuelve las
-         //direcciones co el usuario
           
-
+        $tiendas=Tienda::with('user','direccion')->get();  
         return view('tienda.index', compact('tiendas'));
     }
 
@@ -29,11 +29,8 @@ class TiendaController extends Controller
     public function create()
     {
        
-         
-        $tienda= Tienda::get();
-    
-
-        return view('tienda.create', compact('tienda'));
+   
+        return view('tienda.create');
     }
 
     /**
@@ -46,21 +43,23 @@ class TiendaController extends Controller
     {
         $tienda=$request->all();//todos los request de formulario
          
-        $id = $request->user_id;//Con esto obtenemos el user_id para relacionar la tienda con su 
-        $tienda['id_user']=$id;
-       if($archivo=$request->file('imagen')){
+        $id = $request->user_id;//Con esto obtenemos el user_id para relacionar la tienda con su usuario
+         
+       if($archivo=$request->file('imagen')){//código para subir imagénes
            $nombre=$archivo->getClientOriginalName();
            $archivo->move('images',$nombre);
            $tienda['image']=$nombre;
        }   
        
          $tiendaFinal=Tienda::create($tienda);
-        
+        //encuentro el usuario y adjudico la tienda
         $user = User::find($id);
         $tiendaFinal->user()->sync($user);
+        //si hay una direccion la relaciono con la tienda
+         
         
          
-          return redirect()->route('tienda.create')->with('session', 'Tienda dada de alta correctamente'); 
+          return redirect()->route('direccion.create')->with('session', 'Debes añadir una dirección'); //me voy a crear una dirección
         
     }
    
@@ -73,9 +72,9 @@ class TiendaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Tienda $tienda)
     {
-        //
+         return view('tienda.view',compact('tienda'));
     }
 
     /**
@@ -84,9 +83,9 @@ class TiendaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Tienda $tienda)
     {
-        //
+          return view('tienda.view', compact('tienda'));
     }
 
     /**
@@ -96,9 +95,11 @@ class TiendaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Tienda $tienda)
     {
-        //
+         $tienda->update($request->all());
+        $tienda->save();
+        return redirect()->route('tienda.index')->with('session','Tienda actualizada correctamente');
     }
 
     /**
@@ -109,7 +110,8 @@ class TiendaController extends Controller
      */
     public function destroy($id)
     {
-        //
+          $tienda->delete();
+         return redirect()->route('tienda.index')->with('session','Tienda eliminada satisfactoriamente') ; 
     }
     public function cargarTiendas(){
         $tiendas=Tienda::get();

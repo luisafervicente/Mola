@@ -1,14 +1,30 @@
 @extends('layouts.plantilla')
+ @if(Auth::user()->rol=='vendedor')
+@section('cabecera')
+@include('layouts.cabeceraGeneral')
+@stop
+@section('lateral')
+@include('layouts.barra_lateral')
+@stop
+@section('cuerpo_lateral')
+@include('layouts.cuerpo_vendedor')
+@stop
+@section('pie')
+@include('layouts.pieGeneral')
+@stop
 
+@else
 @section('cabecera')
 @include('layouts.barra_administrador')
 @stop  
 @section('cuerpo')
+
+
 <div class="container">
     <div class="row justify-content-center">
 
         <div class="card">
-           @include('mensajes')
+         ´
             <div class="card-header">Lista de Vendedores</div>
 
 
@@ -43,14 +59,13 @@
                         
                         <!--no le doy estilo a estos enlaces, en principio pueden ser botones, pero se deja al gusto de la aplicación en la que se ponga -->
                         <td><a href="{{route('users.show', $user)}}">Mostrar</a></td>
-                        <td>  <form method="POST" action="{{ route('users.destroy', $user)}}">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-danger">Eliminar</button>
+                        <td>  <a href="{{ route('users.destroy', $user)}}">
+                                 
+                                <button type="button" class="btn btn-danger">Eliminar</button></a>
 
 
                             </form><td>
-                        <td><a href="{{route('users.edit',$users->id)}}">Editar</a></td> 
+                        <td><a href="{{route('users.edit',$user->id)}}">Editar</a></td> 
 
                         @endif
 
@@ -69,4 +84,6 @@
     </div>
 
 </div>
+ 
 @endsection
+ @endif

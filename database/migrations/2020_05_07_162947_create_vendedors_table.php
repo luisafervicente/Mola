@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateUserDireccionsTable extends Migration
+class CreateVendedorsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,14 @@ class CreateUserDireccionsTable extends Migration
      */
     public function up()
     {
-        Schema::create('user_direccions', function (Blueprint $table) {
+        Schema::create('vendedors', function (Blueprint $table) {
             $table->id();
+            $table->integer('tipo_iva');
+            $table->boolean('recargo_equivalencia');
+            $table->string('n_cuenta_bancaria');
+            $table->string('denominacion_fiscal');
+            $table->string('fecha_facturacion');
             $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->foreignId('direccion_id')->references('id')->on('direccions')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -28,6 +32,6 @@ class CreateUserDireccionsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('user_direccions');
+        Schema::dropIfExists('vendedors');
     }
 }

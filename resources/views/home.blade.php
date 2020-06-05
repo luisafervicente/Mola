@@ -8,7 +8,7 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">Dashboard</div>
+                <div class="card-header">Continuemos con el registro</div>
 
                 <div class="card-body">
                     @if (session('status'))
@@ -18,34 +18,35 @@
                     @endif
 
 
-                    <h3>Te has registrado correctamente,añade una direccion</h3>
+                    @if(Route::has('administrador'))
+                    <a href="{{ route('direccion.create' , Auth::user()) }} "><button type="button" class="btn btn-success">Añadir dirección</button></a></div>
+                <a href="{{ route('administrador.index' , Auth::user()) }} "><button type="button" class="btn btn-success">Ir a gestion</button></a></div>
 
-                    <a href="{{ route('direccion.create' , Auth::user()) }} "><button type="button" class="btn btn-info">Añadir dirección</button></a></div>
-                @include('mensajes')
+            @elseif(Route::has('register'))
+           
+        @include('mensajes')
+        {!! Form::open(['route' => ['elegir', Auth::user()->id]])!!}
+        <div class='row justify-content-center'><h4>También necesitamos una opción</h4></div>
+        <div class="form-group row justify-content-center">
+            <div class='col-lg-6 col-md-6 col-6'>
 
-                <h3>y ahora, elige una opcion</h3>
 
-
-                {!! Form::open(['route' => ['elegir', Auth::user()->id]])!!}
-
-                {{ Form::radio( 'eleccion' ,' vendedor' , false, ['class' => 'grid__offset-bp1-2']) }}Quiero vender en Mola<br>
+                {{ Form::radio( 'eleccion' ,' vendedor' , true, ['class' => 'grid__offset-bp1-2']) }}Quiero vender en Mola<br>
                 {{ Form::radio( 'eleccion' ,'cliente', false, ['class' => 'grid__offset-bp1-2']) }}Quiero comprar en Mola<br>
-                <!--si el radio no esta marcado no se permite enviar los dtos !-->
-                @if('vendedor'== false && 'cliente'==false)
-                {{ Form::submit('Click Me!'), array('disabled'}}
-                @else
+            </div>
+            <div class='col-lg-4 col-md-4 col-4'>
 
-                {{ Form::submit('Click Me!'), array('disabled'}}
-                @endif
-
-
-
-
-
-
+                {{ Form::submit('Continuar!',['class'=>['btn btn-success']])}}
 
             </div>
         </div>
+
+        {!! Form::close() !!}
+
+        @endif
+
     </div>
 </div>
+ 
+
 @endsection

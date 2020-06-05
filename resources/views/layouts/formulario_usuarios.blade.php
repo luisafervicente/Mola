@@ -1,6 +1,4 @@
-@extends('layouts.app')
-
-@section('content') 
+ 
     <div class="container">
     <div class="container margenes" style=" display: flex; justify-content:center; flex-wrap: wrap; " >
         <img  src="{{asset('images/logoletras.jpg') }}"  alt="logoMola" class="img-fluid"/>
@@ -9,14 +7,14 @@
         @include('mensajes')
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">{{ __('Registrarse') }}</div>
+                <div class="card-header">{{ __('Register') }}</div>
 
                 <div class="card-body">
-                    <form method="POST" action="{{ route('register') }}">
+                    <form method="POST" action="{{ route('users.store') }}">
                         @csrf
 
                         <div class="form-group row">
-                            <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Nombre') }}</label>
+                            <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Name') }}</label>
 
                             <div class="col-md-6">
                                 <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
@@ -65,9 +63,9 @@
                                         <strong>{{ $message }}</strong>
                                     </span>
                                 @enderror
-                                @if(Route::has('administrador.create'))
-                                   <input  type="hidden"   name="rol"  value='administrador'>
-                                @endif
+                                
+                                   <input  type="hidden"   name="rol"  value='{{ $rol }}'>
+                               
                             </div>
                         </div>
                         
@@ -75,7 +73,7 @@
                         
 
                         <div class="form-group row">
-                            <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('Email') }}</label>
+                            <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
 
                             <div class="col-md-6">
                                 <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
@@ -103,7 +101,7 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="password-confirm" class="col-md-4 col-form-label text-md-right">{{ __('Confima Password') }}</label>
+                            <label for="password-confirm" class="col-md-4 col-form-label text-md-right">{{ __('Confirm Password') }}</label>
 
                             <div class="col-md-6">
                                 <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
@@ -122,7 +120,7 @@
                         <div class="form-group row mb-0">
                             <div class="col-md-6 offset-md-4">
                                 <button type="submit" class="btn btn-success">
-                                    {{ __('Registrarse') }}
+                                    {{ __('Register') }}
                                 </button>
                             </div>
                         </div>
@@ -132,4 +130,5 @@
         </div>
     </div>
 </div>
-@endsection
+ 
+

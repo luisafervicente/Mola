@@ -16,7 +16,7 @@ class VendedorController extends Controller {
     public function index() {
         $users=User::get();
         $vendedores=Vendedor::orderBy('id','Desc')->paginate(10);
-         
+       
         
         return view('users.vendedor.index', compact('vendedores','users'));
     }
@@ -28,9 +28,6 @@ class VendedorController extends Controller {
      */
     public function create() {
         $vendedor = Vendedor::get();
-
-
-
 
         return view('users.vendedor.create', compact('vendedor'));
     }
@@ -52,7 +49,8 @@ class VendedorController extends Controller {
             $user->direccion()->sync($request->get('direccion'));
             }}
         }
-         return redirect()->route('vendedor.index')->with('session_succes','Vendedor guardado satisfactoriamente') ;  
+       
+         return redirect()->route('direccion.create')->with('session','Vendedor guardado satisfactoriamente,ahora añada una dirección por favor') ;  
         }
         
         

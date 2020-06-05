@@ -25,7 +25,7 @@ class User extends Authenticatable
      */
     
     protected $fillable = [
-        'name', 'email', 'password','apellidos','telefono','DNI','rol'
+        'name', 'email','apellidos', 'password','telefono','DNI','rol'
     ];
 
     /**
@@ -56,11 +56,11 @@ class User extends Authenticatable
          return $this->hasOne("App\Administrador");
      }
      public function direccion(){
-         return $this->belongsToMany('App\Direccion', 'user_direccion', 'user_id', 'direccion_id');
+         return $this->belongsToMany('App\Direccion', 'user_direccions', 'user_id', 'direccion_id');
      }
      public function tienda(){//la relación es de muchos a muchos, de esta manera el administrador sera propietario también de la tieda y podrá actuar con ella 
          //si el vendedor necesitara ayuda
-             return $this->belongsToMany('AppTienda', 'tienda_user', 'user_id', 'tienda_id');
+             return $this->belongsToMany('App\Tienda', 'tienda_user', 'tienda_id', 'user_id');
      }
     
     

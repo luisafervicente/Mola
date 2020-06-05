@@ -1,8 +1,6 @@
 @extends('layouts.plantilla')
-
+ 
 @section('cabecera')      
-
-
 @include('layouts.cabeceraGeneral')
 @stop
 @if( (Auth::user()==null))
@@ -14,7 +12,7 @@
 
 @section("cuerpo")
  
-@include('layouts.cuepo_administrador')
+@include('layouts.cuerpo_administrador')
 @stop
 
 @elseif(Auth::user()->rol=='cliente')
@@ -28,8 +26,11 @@
 @section('cuerpo_lateral')
 @include('layouts.cuerpo_vendedor')
 
- @stop
- 
+@stop
+@else
+ @section('cuerpo')
+@include('layouts.imagenHome')
+@stop
 @endif
  
 

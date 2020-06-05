@@ -1,4 +1,5 @@
-r<div class="container-fluid  " style="margin-top: 10px" id="cabecera">
+<div class="container-fluid  " style="margin-top: 10px" id="cabecera">
+   
     <nav class="navbar navbar-expand-lg navbar-light bg-light rounded borde">
         <a class="navbar-brand" href="{{ url('/home') }}">Mi pueblo Mola</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -12,16 +13,10 @@ r<div class="container-fluid  " style="margin-top: 10px" id="cabecera">
                 </li>
 
                 <li class="nav-item dropdown">
-                    <a class="nav-link //dropdown-toggle//" href="{{ route('navegar_tiendas') }}" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                    <a class="nav-link " href="{{ route('navegar_tiendas') }}" id="navbarSupportedContent"    aria-haspopup="true" aria-expanded="true">
                         Nuestras tiendas
                     </a>
-<!--                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        
-                        <a class="dropdown-item" href="#">Action</a>
-                        <a class="dropdown-item" href="#">Another action</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#">Something else here</a>
-                    </div>-->
+                   
                 </li>
                 
                 @if (Route::has('login'))
@@ -97,4 +92,5 @@ r<div class="container-fluid  " style="margin-top: 10px" id="cabecera">
             <a href="#"><i class="fas fa-shopping-cart"></i></a> 
         </div>
     </nav>
+   
 </div>

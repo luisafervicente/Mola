@@ -8,10 +8,10 @@
                     <a class="nav-link" href="{{ route('condiciones_uso') }}"><button type="button" class="btn btn-success">Condiciones de uso</button></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#"><button type="button" class="btn btn-success">Aviso Pivacidad</button></a>
+                    <a class="nav-link" href="{{ route('aviso_privacidad')}}"><button type="button" class="btn btn-success">Aviso Pivacidad</button></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#"><button type="button" class="btn btn-success">Ayuda</button></a>
+                    <a class="nav-link" href="{{ route('ayuda')}}"><button type="button" class="btn btn-success">Ayuda</button></a>
                 </li>
             </ul>
         </nav>
