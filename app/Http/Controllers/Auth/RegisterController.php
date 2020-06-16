@@ -54,8 +54,8 @@ class RegisterController extends Controller
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
             'telefono'=>['required', 'string', 'min:6' ],
-            'DNI'=>['required', 'string', 'min:9'  ],
-             'apellidos'=>['required', 'string', 'max:255'],
+            'DNI'=>['required', 'string', 'min:9','unique:users'  ],
+            'apellidos'=>['required', 'string', 'max:255'],
             
             
         ]);
@@ -79,4 +79,11 @@ class RegisterController extends Controller
             
         ]);
     }
-}
+    
+    
+    
+          
+        
+        
+    }
+

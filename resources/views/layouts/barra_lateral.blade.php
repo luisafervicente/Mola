@@ -1,11 +1,13 @@
- <div class="container-fluid rounded borde" id="lateral" style="height: 100%" > 
+ <div class="container-fluid " id="lateral" style="height: 100%" > 
    
-     <nav class="navbar navbar-expand-lg navbar-light bg-light justify-content-center" style="flex-wrap: wrap">
-                <a class="navbar-brand" href="#"> <img  src="{{ asset('images/logobici.png') }}"  alt="logoMola"    /> </a>
-     </nav>     
-     <nav class="navbar navbar-expand-sm bg-light justify-content-center">
+     <nav class="navbar navbar-expand-lg navbar-light bg-light justify-content-center rounded borde" style="flex-wrap: wrap">
+         
+         <ul class="navbar-nav">
+             <li> <a class="navbar-brand col-12" href="{{ url('/') }}"> <img  src="{{ asset('images/logobici.png') }}"  alt="logoMola"    /> </a></li>
+         
+   
         
-            <ul class="navbar-nav">
+            
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('quienes_somos')}}"><button type="button" class="btn btn-success">Quienes somos</button></a>
                 </li>
@@ -23,7 +25,8 @@
                 </li>
             </ul>
     </nav>
-</div>
+ </div>
+< 
     
     
     

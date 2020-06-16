@@ -1,5 +1,5 @@
 @extends('layouts.plantilla')
- 
+
 @if(Auth::user()->rol=='vendedor')
 @section('cabecera')
 @include('layouts.cabeceraGeneral')
@@ -8,7 +8,66 @@
 @include('layouts.barra_lateral')
 @stop
 @section('cuerpo_lateral')
-@include('layouts.cuerpo_vendedor')
+<div  class="container" style=" width: 100%; margin-top: 5%;justify-content: center;">
+    <div class="alert alert-success" role="alert">
+
+
+
+        <div class="card">
+
+            <div class="card-header">Lista de Tiendas</div>
+
+
+
+            <table class="table">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">Nombre de la tienda</th>
+                        <th scope="col">Familia</th>
+                        <th colspan="3"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!--muestro las direccines con el nombre del usuario que la tiene,en caso de que no tenga usuario
+                    asignado también lo mostrará-->
+
+                    @foreach($tiendas as $tienda)
+
+                    @if( $tienda->user[0]->id == Auth::user()->id )
+                    <tr>
+                        <td>{{$tienda->nombre_tienda}}</td>
+                        <td>{{$tienda->clasificacion}}</td>
+
+
+                        <!--no le doy estilo a estos enlaces, en principio pueden ser botones, pero se deja al gusto de la aplicación en la que se ponga -->
+                        <td><a href="{{route('tienda.show', $tienda) }}">Mostrar</a></td>
+                        <td>  <form method="POST" action="{{ route('tienda.destroy', $direccion ?? '' )}}">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-danger">Eliminar</button>
+
+
+                            </form><td>
+                        <td><a href="{{route('tienda.edit', 'Auth::user()')}}">Editar</a></td> 
+
+                        @endif
+
+                    </tr>              
+                    @endforeach
+
+                    <tr>
+                        <td><a href="{{route('tienda.create')}}">Crear</a></td>
+                    </tr>
+                </tbody>
+            </table>
+
+
+
+
+        </div>
+
+    </div>
+</div>
 @stop
 @section('pie')
 @include('layouts.pieGeneral')
@@ -34,7 +93,7 @@
             <div class="row justify-content-center">
 
                 <div class="card">
-                    @include('mensajes')
+
                     <div class="card-header">Lista de Tiendas</div>
 
 
@@ -56,7 +115,7 @@
                             <!--muestro las direccines con el nombre del usuario que la tiene,en caso de que no tenga usuario
                             asignado también lo mostrará-->
                             @foreach($tiendas as $tienda)
-                               @foreach($tienda->user as $use ) 
+                            @foreach($tienda->user as $use ) 
                             <tr>
                                 @if(!isset($use))
                                 <th scope="row"> Sin datos </th>
@@ -67,7 +126,7 @@
                                 <td>{{$use->nombre}} {{$use->apellidos}}</td>
                                 <td>{{$tienda->nombre_tienda}}</td>
                                 <td>{{$tienda->clasificacion}}</td>
-                                 
+
 
                                 <!--no le doy estilo a estos enlaces, en principio pueden ser botones, pero se deja al gusto de la aplicación en la que se ponga -->
                                 <td><a href="{{route('tienda.show', $direccion ?? '') }}">Mostrar</a></td>
@@ -83,7 +142,7 @@
 
 
                             </tr>              
-                                @endforeach
+                            @endforeach
                             @endforeach
                             <tr>
                                 <td><a href="{{route('tienda.create')}}">Crear</a></td>
@@ -95,8 +154,8 @@
                 </div>
 
             </div>
-
+<a class="btn btn-primary"   href="{{ url('welcome') }}">Volver</a>
         </div>
-@endsection
-@endif
+        @endsection
+        @endif
 

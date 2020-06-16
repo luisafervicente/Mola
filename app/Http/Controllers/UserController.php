@@ -9,6 +9,9 @@ use App\Vendedor;
 use App\Administrador;
 use App\User_direccion;
 use App\Direccion;
+use App\Http\Controllers\RegisterController;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller {
 
@@ -21,12 +24,12 @@ class UserController extends Controller {
         $users = User::get();
         return view('users.index', compact('users'));
     }
-   public function create(){
-       
-       return redirect()->route('register')->with('session');
-       
-   }
-    
+
+    public function create() {
+
+        return view('users.create');
+    }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -38,16 +41,34 @@ class UserController extends Controller {
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
             'telefono' => ['required', 'string', 'min:6'],
-            'DNI' => ['required', 'string', 'min:9'],
+            'DNI' => ['required', 'string', 'min:9','unique:users'],
             'apellidos' => ['required', 'string', 'max:255']]
         );
-        $user = User::create($request->all());
+
+        $user = User::create([
+                    'name' => $request['name'],
+                    'email' => $request['email'],
+                    'password' => Hash::make($request['password']),
+                    'apellidos' => $request['apellidos'],
+                    'DNI' => $request['DNI'],
+                    'telefono' => $request['telefono'],
+                    'rol' => $request['rol']
+        ]);
+
+
         if ($user->rol == 'administrador') {
-            return redirect()->route('administrador.index')->with('session', 'Administrador guardado satisfactoriamente');
+            $userss = serialize($user);
+            file_put_contents('store', $userss);
+            return redirect()->route('administrador.create', 'userss')->with('session', 'Administrador guardado satisfactoriamente');
         } elseif ($user->rol == 'vendedor') {
-            return redirect()->route('vendedor.create')->with('session', 'Vendedor guardado satisfactoriamente');
+            $userss = serialize($user);
+            file_put_contents('store', $userss);
+            return redirect()->route('VendedorController.createAdministrador', 'userss')->with('session', 'Continuamos');
         } elseif ($user->rol == 'cliente') {
-            return redirect()->route('cliente.create')->with('session', 'Cliente guardado satisfactoriamente');
+
+            $userss = serialize($user);
+            file_put_contents('store', $userss);
+            return redirect()->route('crearCliente', 'userss')->with('session', 'Continuamos');
         }
     }
 
@@ -148,6 +169,13 @@ class UserController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, User $user) {
+
+        $request->validate(['name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255'],
+            'telefono' => ['required', 'string', 'min:6'],
+            'DNI' => ['required', 'string', 'min:9'],
+            'apellidos' => ['required', 'string', 'max:255']]
+        );
         $administradores = Administrador::get();
         $vendedores = Vendedor::get();
         $clientes = Cliente::get();
@@ -155,28 +183,35 @@ class UserController extends Controller {
         $user->update($request->all());
         foreach ($clientes as $cliente) {
             if ($user->id == $cliente->user_id) {
+                $user->save();
                 $cliente->update($request->all());
                 $cliente->save();
+                return redirect()->route('cliente.index')->with('session', 'cliente actualizado correctamente');
             }
         }
         foreach ($vendedores as $vendedor) {
             if ($user->id == $vendedor->user_id) {
+
+                $request->validate(['tipo_iva' => ['required', 'integer', 'max:1'],
+                    'n_cuenta_bancaria' => ['required', 'string', 'max:20', 'min:20'],
+                    'denominacion_fiscal' => ['required', 'string', 'max:100'],
+                    'fecha_facturacion' => ['required', 'string', 'min:6'],
+                ]);
+                $user->save();
                 $vendedor->update($request->all());
                 $vendedor->save();
+                return redirect()->route('vendedor.index')->with('session', 'Vendedor actualizado correctamente');
             }
         }
         foreach ($administradores as $administrador) {
             if ($user->id == $administrador->users_id) {
-
+                $user->save();
                 $administrador->update($request->all());
+
                 $administrador->save();
+                return redirect()->route('administrador.index')->with('session', 'Administrador actualizado correctamente');
             }
         }
-
-
-
-
-        $user->save();
 
 
         //}
@@ -191,8 +226,100 @@ class UserController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function destroy(User $user) {
-        $user->delete();
-        return redirect()->route('users.index')->with('session', 'Usuario eliminado satisfactoriamente');
+        $rol = $user->rol;
+
+        switch ($user = 'rol') {
+
+            case 'administrador':
+                $users_id = $user->id;
+                $administrador = Admininstrador::find($users_id);
+                return $administrador;
+                $administrador->delete();
+                $user->delete();
+
+                return redirect()->route('administrador.index')->with('session', 'Administrador eliminado satisfactoriamente');
+                break;
+
+            case 'vendedor':
+
+                $user->delete();
+
+                return redirect()->route('vendedor.index')->with('session', 'Administrador eliminado satisfactoriamente');
+                break;
+
+            case 'administrador': {
+
+                    $user->delete();
+                    return redirect()->route('administrador.index')->with('session', 'Administrador eliminado satisfactoriamente');
+                    break;
+                }
+        }
+    }
+
+    public function ratificarEliminacion($id) {
+        $user = User::find($id);
+        switch ($user->rol) {
+            case 'administrador':
+                return view('users.administrador.destroy', compact('user'));
+                break;
+            case 'vendedor':
+                return view('users.vendedor.destroy', compact('user'));
+                break;
+            case 'cliente':
+                return view('users.cliente.destroy', compact('user'));
+                defautl:
+                break;
+        }
+        //envio el destroy a una pagina de confirmación donde acabara de eleminiar segun el rol
+
+        return view('users.destroy', compact('user'));
+    }
+
+    public function eliminarUsuario(Request $request) {
+        $rol = $request->rol;
+
+        $id = $request->users_id;
+        $user = User::find($id);
+        switch ($rol) {
+
+            case 'administrador':
+                $administradores = Administrador::get();
+                foreach ($administradores as $administrador) {
+                    if ($administrador->users_id == $id) {
+
+                        $administrador->delete();
+                        $user->delete();
+                        return redirect()->route('administrador.index')->with('session', 'Administrador eliminado satisfactoriamente');
+                        break;
+                    }
+                }
+
+            case 'vendedor':
+                $vendedores = Vendedor::get();
+                foreach ($vendedores as $vendedor) {
+                    if ($vendedor->users_id == $id) {
+
+                        $vendedor->delete();
+                        $user->delete();
+                        return redirect()->route('vendedor.index')->with('session', 'Vendedor eliminado satisfactoriamente');
+                        break;
+                    }
+                }
+
+            case 'cliente': {
+
+                    $clientes = Cliente::get();
+                    foreach ($clientes as $cliente) {
+                        if ($cliente->users_id == $id) {
+
+                            $cliente->delete();
+                            $user->delete();
+                            return redirect()->route('cliente.index')->with('session', 'Cliente eliminado satisfactoriamente');
+                            break;
+                        }
+                    }
+                }
+        }
     }
 
     //con este mètod, hago que un usuario recien registrado acceda a la página de registro

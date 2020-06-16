@@ -14,13 +14,10 @@ class ClienteController extends Controller {
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(User $user) {
+    public function index() {
         $users = User::get();
         $clientes = Cliente::orderBy('id', 'Desc')->paginate(10);
-        if($user->rol=='administrador'){
-        return view('users.cliente.index', compact('clientes', 'users'));}
-        else{return redirect()->route('home')->with('session'); 
-    }
+        return view('users.cliente.index', compact('clientes', 'users'));
     }
 
     /**
@@ -32,6 +29,13 @@ class ClienteController extends Controller {
 
         $cliente = Cliente::get();
 
+        return view('users.cliente.create', compact('cliente'));
+    }
+
+    public function createAdministrador(User $user) {
+        $user = file_get_contents('store');
+        $cliente = unserialize($user);
+       
         return view('users.cliente.create', compact('cliente'));
     }
 

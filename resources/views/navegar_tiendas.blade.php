@@ -11,38 +11,30 @@
 
 @section('cuerpo_lateral')
 
- 
-    <div class="container "  >
-    
-    <div class="row" >
+
+<div class="container "  >
+
+    <div class="card-group">
         @foreach($tiendas as $tienda)
-        <div class=" col-lg-10 ">   
-             <div class="row" style="display:flex;" >
-<div class="card col-lg-3 col-md-3 col-sm-6 col-10 margentotal "  >
-    <a href='{{route("tienda.show",$tienda )}}'>  <img src="{{ asset('images/'.$tienda->image) }}" class="card-img-top" alt="..."></a>
-  <div class="card-body">
-    <h5 class="card-title">{{$tienda->nombre_tienda}}</h5>
-    <p class="card-text">{{$tienda->comentarios}}</p>
-  </div>
-   
-  <div class="card-body">
-    <a href='{{route("tienda.show",$tienda )}}' class="card-link">Visitanos</a>
-     
-  </div>
-    
-    
+
+        <div class="card" style="border: green solid medium; margin:1%;" >
+            <a href='{{route("tienda.show",$tienda )}}'>  <img src="{{ asset('images/'.$tienda->image) }}" class="card-img-top" alt="..."></a>
+            <div class="card-body">
+                <h5 class="card-title">{{$tienda->nombre_tienda}}</h5>
+                <p class="card-text">{{$tienda->comentarios}}</p>
+            </div>
+
+            <div class="card-body">
+                <a href='{{route("tienda.show",$tienda )}}' class="card-link">Visitanos</a>
+
+            </div>
+
+
+        </div>   
+        @endforeach
+    </div>
 </div>
-             </div>
-        </div>
-    
-    
-    
-    
-    @endforeach
-</div>
- 
- 
-               
+
 @endsection
 @section('pie')
 @section('layouts.pieGeneral')
@@ -69,8 +61,8 @@
 
 
 
- @stop
+@stop
 
-    @section("pie")
-    @include('layouts.pieGeneral')
-    @stop 
+@section("pie")
+@include('layouts.pieGeneral')
+@stop 

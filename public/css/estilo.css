@@ -35,3 +35,8 @@
     border-radius: 25px;
 }
  
+#tarjeta{
+    border-bottom-left-radius: 5%;
+    border-bottom-color: green;
+      
+}

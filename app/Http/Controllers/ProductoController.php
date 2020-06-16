@@ -85,7 +85,7 @@ class ProductoCotroller extends Controller
     public function elegir($id){
         $user=User::find($id);
         
-            if()
+           
     }
     }
 }

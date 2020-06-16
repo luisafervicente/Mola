@@ -153,7 +153,7 @@
                         {{   Form::checkbox('recargo_equivalencia',$vendedor->recargo_equivalencia ,array('readonly'),['class' => 'grid__offset-bp1-2'])  }} 
 
                     </div>
-                    <a class="btn btn-primary"   href="{{ route('users.update',$user ??'') }}">Editar</a>
+                    <a class="btn btn-primary"   href="{{ route('users.edit',$user ??'') }}">Editar</a>
                     <a class="btn btn-primary"   href="{{ route('vendedor.index') }}">Volver</a>
 
                 </div>
@@ -168,11 +168,11 @@
 
                     <div class='form-group col-lg-5 col-md-6 col-sm-12 col-12'>
                         {{ Form:: label('user_id', 'Número usuario: '  ) }}
-                        {{ Form:: text('user_id',  $administrador->user_id ,array('readonly')) }} 
+                        {{ Form:: text('user_id',  $administrador->users_id ,array('readonly')) }} 
                     </div>
 
-                    <a class="btn btn-primary"   href="{{ route('users.update',$user ??'') }}">Editar</a>
-                    <a class="btn btn-primary"   href="{{ route('vendedor.index') }}">Volver</a>
+                    <a class="btn btn-primary"   href="{{ route('users.edit',$user ??'') }}">Editar</a>
+                    <a class="btn btn-primary"   href="{{ route('administrador.index') }}">Volver</a>
 
                 </div>
 

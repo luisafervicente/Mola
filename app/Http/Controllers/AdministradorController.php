@@ -26,27 +26,28 @@ class AdministradorController extends Controller {
      *
      * @return \Illuminate\Http\Response
      */
-    public function create() {
-       $administrador = Administrador::get();
-       
-        return view('auth.register', compact('administrador'));
+    public function create(User $user) {
+        $user = file_get_contents('store');
+        $usuario = unserialize($user);
+
+        return view('users.administrador.create', compact('usuario'));
     }
+
 //creo un administrador con los datos del usuario, simplemente el añado el id
-     public function store(Request $request) {
-        
-         $users=User::get();  
-        $administrador=Administrador::create($request->all());
-        foreach($users as $user){
-            if($user->id==$administrador->user_id){//buscamos el id del usuario
-               
-           if($request->get('direccion')){
-            $user->direccion()->sync($request->get('direccion'));
-            }}
+    public function store(Request $request) {
+
+        $users = User::get();
+        $administrador = Administrador::create($request->all());
+
+        foreach ($users as $user) {
+            if ($user->id == $administrador->users_id) {//buscamos el id del usuario
+                if ($request->get('direccion')) {
+                    $user->direccion()->sync($request->get('direccion'));
+                }
+            }
         }
-       
-         return redirect()->route('direccion.create')->with('session','Administrador guardado satisfactoriamente,ahora añada una dirección por favor') ;  
-        }
-     
-   
- 
+
+        return redirect()->route('direccion.create')->with('session', 'Administrador guardado satisfactoriamente,ahora añada una dirección por favor');
+    }
+
 }

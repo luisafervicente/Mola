@@ -11,7 +11,7 @@
         <a href="{{ route('direccion.index') }}"><button type="button" class="btn btn-warning col-lg-3 col-md-3 col-sm-5 col-5"  >Gestionar direcciones</button></a>
  
  
-        <a href="{{ route('users.index') }}"><button type="button" class="btn btn-warning col-lg-2 col-md-3 col-sm-5 col-5">Gestionar usuarios</button></a>
+        <a href="{{ route('users.index') }}"><button type="button" class="btn btn-warning col-lg-2 col-md-3 col-sm-5 col-5">Ver usuarios</button></a>
     </div>
 </div>
 <div class="container margenes" style=" display: flex; justify-content:center; flex-wrap: ;   " >

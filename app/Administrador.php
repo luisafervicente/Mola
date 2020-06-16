@@ -7,7 +7,7 @@ use App\User;
 
 class Administrador extends Model
 {
-   protected $fillable=[ 'user_id' ];
+   protected $fillable=[ 'users_id' ];
  
  public function Usuario(){
         return $this->belongsTo('App\User');

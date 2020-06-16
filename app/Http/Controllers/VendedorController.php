@@ -1,10 +1,12 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Direccion;
 use Illuminate\Http\Request;
 use App\Vendedor;
 use App\User;
+use Illuminate\Support\Facades\Validator;
 
 class VendedorController extends Controller {
 
@@ -14,11 +16,10 @@ class VendedorController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function index() {
-        $users=User::get();
-        $vendedores=Vendedor::orderBy('id','Desc')->paginate(10);
-       
-        
-        return view('users.vendedor.index', compact('vendedores','users'));
+        $users = User::get();
+        $vendedores = Vendedor::orderBy('id', 'Desc')->paginate(10);
+
+        return view('users.vendedor.index', compact('vendedores', 'users'));
     }
 
     /**
@@ -31,6 +32,12 @@ class VendedorController extends Controller {
 
         return view('users.vendedor.create', compact('vendedor'));
     }
+    public function createAdministrador(User $user) {
+        $user = file_get_contents('store');
+        $vendedor = unserialize($user);
+
+        return view('users.vendedor.create', compact('vendedor'));
+    }
 
     /**
      * Store a newly created resource in storage.
@@ -39,26 +46,25 @@ class VendedorController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request) {
-        
-        $users=User::get();  
-        $vendedor=Vendedor::create($request->all());
-        foreach($users as $user){
-            if($user->id==$vendedor->user_id){//buscamos el id del usuario
-               
-           if($request->get('direccion')){
-            $user->direccion()->sync($request->get('direccion'));
-            }}
+        $request->validate(['tipo_iva' => ['required', 'integer', 'max:1'],
+            'n_cuenta_bancaria' => ['required', 'string', 'max:20', 'min:20'],
+            'denominacion_fiscal' => ['required', 'string', 'max:100'],
+            'fecha_facturacion' => ['required', 'string', 'min:6'],
+        ]);
+
+        $users = User::get();
+
+        $vendedor = Vendedor::create($request->all());
+        foreach ($users as $user) {
+            if ($user->id == $vendedor->user_id) {//buscamos el id del usuario
+                if ($request->get('direccion')) {
+                    $user->direccion()->sync($request->get('direccion'));
+                }
+            }
         }
-       
-         return redirect()->route('direccion.create')->with('session','Vendedor guardado satisfactoriamente,ahora añada una dirección por favor') ;  
-        }
-        
-        
-        
-        
-        
-        
-     
+
+        return redirect()->route('direccion.create')->with('session', 'Vendedor guardado satisfactoriamente,ahora añada una dirección por favor');
+    }
 
     /**
      * Display the specified resource.
@@ -77,7 +83,7 @@ class VendedorController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function edit($id) {
-       return "edit";
+        return "edit";
     }
 
     /**
@@ -88,7 +94,14 @@ class VendedorController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id) {
-        return "update";
+        $request->validate(['tipo_iva' => ['required', 'integer', 'max:1'],
+            'n_cuenta_bancaria' => ['required', 'string', 'max:20', 'min:20'],
+            'denominacion_fiscal' => ['required', 'string', 'max:100'],
+            'fecha_facturacion' => ['required', 'string', 'min:6'],
+        ]);
+        $vendedor > update($request->all());
+        $vendedor->save();
+        return redirect()->route('vendedor.index')->with('session', 'Vendedor actualizada correctamente');
     }
 
     /**
@@ -98,8 +111,8 @@ class VendedorController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function destroy(User $user) {
-       $user->delete();
-         return redirect()->route('vendedor.index')->with('session','Rol eliminado satisfactoriamente') ;  
+        $user->delete();
+        return redirect()->route('vendedor.index')->with('session', 'Rol eliminado satisfactoriamente');
     }
 
 }

@@ -57,7 +57,7 @@ modificando o añadiendo una direccion una vez identificado, se ira a la pagina 
 <div class="form-group form-check  col-12" style="display: flex; justify-content: center;">
     {!! Form:: submit('Enviar', ['class'=> 'btn btn-success']) !!}
 
-
+<a class="btn btn-primary"   href="{{ route('direccion.index') }}">Volver</a>
 
 
     {!! Form::close() !!}

@@ -25,7 +25,7 @@ Route::get('/', function () {
 });
 Route::post('/welcome', "HomeController@index") ;
      
-
+Route::get('/welcome', "HomeController@index") ;
 Auth::routes();
  
 Route::get('/home', 'HomeController@index')->name('home');
@@ -48,4 +48,6 @@ return view('aviso_privacidad');})->name('aviso_privacidad');
 Route::get('/ayuda',function(){
 return view('ayuda');})->name('ayuda');
 Route::get('/navegar_tiendas', 'TiendaController@cargarTiendas')->name('navegar_tiendas');
- 
+Route::get('/eliminarUsuario/{id}', 'UserController@ratificarEliminacion')->name('ratificarUsuario');
+Route::post('/eliminarUsuario/', 'UserController@eliminarUsuario')->name('eliminarUsuario');
+Route::get('/crearCliente/{userss}', 'ClienteController@createAdministrador')->name('crearCliente');

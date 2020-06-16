@@ -27,6 +27,7 @@ class HomeController extends Controller
      */
     public function index()
     {
+         
        $tiendas=Tienda::get();
         
         return view('welcome',compact('tiendas'));

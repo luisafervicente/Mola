@@ -16,15 +16,15 @@
             <ul style=" list-style: none;" >
                 <li>   <h3>Cómo pagar</h3>
                     En MipuebloMola hemos trabajado para crear un entorno 100% seguro en el que realizar tus pagos. Admitimos la mayoría de tarjetas de crédito y débito en función de las condiciones y limitaciones de la pasarela de pago, a través de nuestro TPV virtual.
-                    Dicha pasarela procesa los datos en entorno seguro, mediante el cifrado de las comunicaciones, de modo que ni el establecimiento en el que has realizado tu compra, ni Zerca! ni terceros ajenos tienen acceso a los datos de la tarjeta o transacción efectuada.
+                    Dicha pasarela procesa los datos en entorno seguro, mediante el cifrado de las comunicaciones, de modo que ni el establecimiento en el que has realizado tu compra, ni Mi pueblo Mola ,ni terceros ajenos tienen acceso a los datos de la tarjeta o transacción efectuada.
                     ¿Tienes dudas o necesitas ayuda? Contacta con nosotros.</li>
                 <li>  <h3>Crear una cuenta</h3>
                     Para realizar una compra rápida y poder gestionar tus pedidos anteriores, tu libreta de direcciones y la configuración de tu cuenta, debes registrarte como cliente. Para ello sólo te pediremos tu nombre y apellido, una cuenta de correo electrónico válida y una contraseña que tú generarás. ¡No olvides confirmar los cuadros informativos que encontrarás en el formulario!
-                    Puedes registrarte sin necesidad de realizar ninguna compra, o hacerlo en el momento de formalizar tu primera compra. Al registrarte, te conviertes automáticamente en socio de nuestro Club de Fidelización (link al apartado Club de fidelización), y comienzas a acumular dinero en tu saldo para descontar de futuras compras.
-                    Desde “Mi cuenta” podrás configurar tus datos personales, agenda de direcciones de entrega, contraseña o dirección de correo electrónico, y consultar tu historial de pedidos, datos de facturación y de pago así como el saldo del Club de Fidelización acumulado en tu wallet.
+                    Puedes registrarte sin necesidad de realizar ninguna compra, o hacerlo en el momento de formalizar tu primera compra.  
+                    Desde “Mi cuenta” podrás configurar tus datos personales, agenda de direcciones de entrega, contraseña o dirección de correo electrónico, y consultar tu historial de pedidos, datos de facturación y de pago.
                     ¿Tienes dudas o necesitas ayuda? Contacta con nosotros.</li>
                 <li><h3>Métodos de envío</h3>
-                    Al realizar tu compra tú eliges: recoger el producto en tienda, sin coste, o que te lo enviemos a casa en condiciones muy competitivas. En el segundo caso podrás escoger la fecha y franja horaria en la que quieres recibir tu pedido en casa, con un coste de transporte reducido.
+                    Al realizar tu compra tú eliges: recoger el producto en tienda, sin coste, o que te lo enviemos a casa con un medio de reparto sostenible y amable con el medio ambiente.  
                     En determinados productos que requieren un servicio logístico más complejo, es el propio establecimiento el que se ocupará de hacerte llegar el artículo a tu domicilio. Y para producto fresco (alimentación), contamos con un servicio logístico específico que garantiza la entrega de tu compra en óptimas condiciones.
                     Toda la información referente a las opciones de métodos de envío y posibles costes asociados aparecerán en tu carrito de la compra.
                     ¿Tienes dudas o necesitas ayuda? Contacta con nosotros.

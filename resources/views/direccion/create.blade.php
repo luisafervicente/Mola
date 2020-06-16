@@ -54,6 +54,7 @@
     </div>
     {!! Form::close() !!}
     </div>
+        <a class="btn btn-primary"   href="{{ route('direccion.index') }}">Volver</a>
 </div>
 @endsection
  

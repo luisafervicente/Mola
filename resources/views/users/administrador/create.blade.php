@@ -22,11 +22,8 @@
 
     <div class="form-group col-lg-6 col-md-6 col-sm-12 col-12" >
         <h3>Casi hemos terminado, dale a crear dirección y ya estará-</h3>
-         
         
-
-   
-        {!! Form::hidden('user_id', Auth::user()->id )!!}
+        {!! Form::hidden('users_id', $usuario->id  )!!}
         
        
     <div class="form-group form-check  col-12" style="display: flex; justify-content: center;">

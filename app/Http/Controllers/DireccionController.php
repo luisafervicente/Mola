@@ -9,6 +9,7 @@ use App\Vendedor;
 use App\User;
 use App\User_direcccion;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class DireccionController extends Controller {
 
@@ -43,6 +44,15 @@ class DireccionController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request) {
+        
+           $request->validate(['calle' => ['required', 'string', 'max:250'],
+            'poblacion' => ['required', 'string','max:250' ],
+            'provincia' => ['required', 'string', 'max:100'],
+            'pais'=>['required', 'string', 'max:50' ],
+               'codigo_postal'=>['required', 'string', 'max:5' ],
+            ]);
+   
+        
         $direccion = Direccion::create($request->all()); //creo una direccion co todos los datos
         
         if (isset($request->tienda_id)) {
@@ -96,6 +106,12 @@ class DireccionController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Direccion $direccion) {
+         $request->validate(['calle' => ['required', 'string', 'max:250'],
+            'poblacion' => ['required', 'string','max:250' ],
+            'provincia' => ['required', 'string', 'max:100'],
+            'pais'=>['required', 'string', 'max:50' ],
+               'codigo_postal'=>['required', 'string', 'max:5' ],
+            ]);
         $direccion->update($request->all());
         $direccion->save();
         return redirect()->route('direccon.index')->with('session', 'Dirección actualizada correctamente');

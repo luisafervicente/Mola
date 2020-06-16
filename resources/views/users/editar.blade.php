@@ -173,7 +173,7 @@
                     </div>
 
 
-                    <a class="btn btn-primary"   href="{{ route('aministrador.index') }}">Volver</a>
+                    <a class="btn btn-primary"   href="{{ route('administrador.index') }}">Volver</a>
 
                 </div>
 

@@ -4,14 +4,21 @@
 @include('layouts.barra_administrador')
 @stop  
 @section('cuerpo')
-<div class="container">
-    <div class="row justify-content-center">
-
-        <div class="card">
-            @include('mensajes')
-            <div class="card-header">Lista de Clientes</div>
+<div class="container margenes" style=" display: flex; justify-content:center; flex-wrap: wrap; " >
 
 
+    <img  src="{{asset('images/logoletras.jpg') }}"  alt="logoMola" class="img-fluid"/> 
+
+
+</div>
+<div  class="container " style=" width: 75%;">
+    <div class="alert alert-success" role="alert">
+        <div class="container">
+            <div class="row justify-content-center">
+
+                <div class="card">
+                    @include('mensajes')
+                    <div class="card-header">Lista de clientes</div>
 
             <table class="table">
                 <thead class="thead-dark">
@@ -65,8 +72,9 @@
         </div>
 
     </div>
-
+<a class="btn btn-primary"   href="{{ url('welcome') }}">Volver</a>
 </div>
+    </div></div>
 @endsection
 @else
 @section('cabecera')      

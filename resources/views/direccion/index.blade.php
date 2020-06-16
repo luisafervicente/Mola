@@ -41,7 +41,7 @@
                             <!--muestro las direccines con el nombre del usuario que la tiene,en caso de que no tenga usuario
                             asignado también lo mostrará-->
                             @foreach($direcciones as $direccion)
-                               @foreach($direccion->users as $user) 
+                            @foreach($direccion->users as $user) 
                             <tr>
                                 @if(!isset($user))
                                 <th scope="row"> Sin datos </th>
@@ -69,7 +69,7 @@
 
 
                             </tr>              
-                                @endforeach
+                            @endforeach
                             @endforeach
                             <tr>
                                 <td><a href="{{route('direccion.create')}}">Crear</a></td>
@@ -81,6 +81,6 @@
                 </div>
 
             </div>
-
+            <a class="btn btn-primary"   href="{{ url('welcome') }}">Volver</a>
         </div>
 
