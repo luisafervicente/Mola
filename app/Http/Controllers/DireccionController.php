@@ -49,7 +49,7 @@ class DireccionController extends Controller {
             'poblacion' => ['required', 'string','max:250' ],
             'provincia' => ['required', 'string', 'max:100'],
             'pais'=>['required', 'string', 'max:50' ],
-               'codigo_postal'=>['required', 'string', 'max:5' ],
+            'codigo_postal'=>['required', 'string', 'max:5' ],
             ]);
    
         

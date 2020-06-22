@@ -6,11 +6,12 @@ use Illuminate\Validation\Rule;
 use Illuminate\Http\Request;
 use App\Cliente;
 use App\User;
-
+//en esta clase están los métodos para crear  un cliente a partir de un usuario
 class ClienteController extends Controller {
 
     /**
      * Display a listing of the resource.
+     *
      *
      * @return \Illuminate\Http\Response
      */
@@ -21,21 +22,29 @@ class ClienteController extends Controller {
     }
 
     /**
-     * Show the form for creating a new resource.
+     *esta función create es para cuando un
+     *cliente se registra, es decir se crea el mismo
      *
      * @return \Illuminate\Http\Response
      */
     public function create() {
 
         $cliente = Cliente::get();
-
-        return view('users.cliente.create', compact('cliente'));
+         return view('users.cliente.create', compact('cliente'));
     }
-
+     /**
+      * esta función es para cuando un administrador crea un cliente
+      * necesito el usuario que se crea primero, en este caso no
+      * coincide con el usuario que esta registrado, por eso tengo que 
+      * pasarlo por parámetro.
+      * @param User $user
+      * @return type
+      * 
+      */
     public function createAdministrador(User $user) {
         $user = file_get_contents('store');
         $cliente = unserialize($user);
-       
+        //el mismo procedimiento que administradorController@create
         return view('users.cliente.create', compact('cliente'));
     }
 
@@ -55,7 +64,7 @@ class ClienteController extends Controller {
                     $user->direccion()->sync($request->get('direccion'));
                 }
             }
-        }
+        }//nada mas almacenar el cliente se le dirige a crear una direccion
 
         return redirect()->route('direccion.create')->with('session', 'Cliente guardado satisfactoriamente,ahora añada una dirección por favor');
     }
@@ -98,11 +107,7 @@ class ClienteController extends Controller {
         $users = User::get();
         $usuario = new User;
         foreach ($users as $user) {
-            if ($user->id == $cliente->user_id) {
-
-
-
-
+            if ($user->id == $cliente->user_id) {//actualizamos el cliente, para ello validamos los campos
                 $request->validate([
                     'name' => ['required', 'string', 'max:255'],
                     'email' => ['required', 'string', 'email', 'max:255', Rule::unique('users')->ignore($user)],
@@ -115,12 +120,6 @@ class ClienteController extends Controller {
                 $user->save();
             }
         }
-
-
-
-
-
-
         return redirect()->route('cliente.index')->with('sesion', 'Cliente actualizado correctamente');
     }
 

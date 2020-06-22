@@ -10,7 +10,7 @@
                 <div class="col-lg-4 col-md-4 col-sm-10 margenes" >
                     <div class=" col-lg-10 col-md-10 col-sm-10 ">
                     <form class="form-inline">
-                        <button class="btn btn-outline-success margenes" type="submit">Buscar por producto</button>
+                        <button class="btn btn-outline-success margenes" type="submit">Cambio el boton</button>
                         <input class="form-control margenes margenes" type="search" placeholder="Search" aria-label="Search">
                        
                     </form>  
