@@ -6,30 +6,33 @@ use Illuminate\Http\Request;
 use App\User;
 use App\Administrador;
 
+//*Los administradores son uno de los roles de la aplicación
+//   * existe un superusuario, que no se podra eliminar, y que se creará en la instalación d
+//  * de la aplicación 
 class AdministradorController extends Controller {
 
     /**
-     * Display a listing of the resource.
      *
+     *Se muestra el en el index la lista de administradores, con los usuarios cargados para tener todo
+     * los datos
      * @return \Illuminate\Http\Response
      */
     public function index() {
         $users = User::get();
         $administradores = Administrador::orderBy('id', 'Desc')->paginate(10);
-
-
         return view('users.administrador.index', compact('administradores', 'users'));
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
+     * 
+     *Nos llega un usuario, ya creado y con vamos a la vista
+     * donde está
      * @return \Illuminate\Http\Response
      */
     public function create(User $user) {
         $user = file_get_contents('store');
         $usuario = unserialize($user);
-
+    //tenemos que desereializar el ussario que nos viene serializdo de la clase controllerUser
         return view('users.administrador.create', compact('usuario'));
     }
 
